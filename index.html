@@ -11,7 +11,7 @@
     body { margin: 0; overflow: hidden; }
     #ui {
       position: absolute;
-      top: 10px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
@@ -33,10 +33,10 @@
   </style>
 </head>
 <body>
-  <!-- Controles -->
+  <!-- Controles de navegación -->
   <div id="ui">
-    <button id="liberar">Liberar</button>
-    <button id="reescanear">Reescanear</button>
+    <button id="prev">⬅️ Anterior</button>
+    <button id="next">➡️ Siguiente</button>
   </div>
 
   <a-scene
@@ -48,64 +48,99 @@
     <!-- Cámara -->
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Target -->
+    <!-- Target con 5 cards -->
     <a-entity mindar-image-target="targetIndex: 0" id="target">
-      <!-- Card cristalino -->
-      <a-plane 
-        id="card"
+      
+      <!-- Card 1 -->
+      <a-plane id="card1"
         position="0 0.9 0"
         width="1.5" height="0.6" 
         color="#007BFF" 
-        opacity="0.35"
+        opacity="0.6"
+        visible="true"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 1" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
+
+      <!-- Card 2 -->
+      <a-plane id="card2"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#28A745" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 2" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+
+      <!-- Card 3 -->
+      <a-plane id="card3"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#FFC107" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 3" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+
+      <!-- Card 4 -->
+      <a-plane id="card4"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#DC3545" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 4" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+
+      <!-- Card 5 -->
+      <a-plane id="card5"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#6F42C1" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 5" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+
     </a-entity>
   </a-scene>
 
   <script>
-    const sceneEl = document.querySelector("#scene");
-    const target = document.querySelector("#target");
-    const card = document.querySelector("#card");
+    const cards = [
+      document.querySelector("#card1"),
+      document.querySelector("#card2"),
+      document.querySelector("#card3"),
+      document.querySelector("#card4"),
+      document.querySelector("#card5")
+    ];
 
-    // Botones
-    const btnLiberar = document.querySelector("#liberar");
-    const btnReescanear = document.querySelector("#reescanear");
+    let currentIndex = 0;
 
-    let releasedObject = null;
-    let isScannerActive = true;
+    function showCard(index) {
+      cards.forEach((c, i) => {
+        c.setAttribute("visible", i === index);
+      });
+    }
 
-    // Al presionar "Liberar"
-    btnLiberar.addEventListener("click", () => {
-      if (!isScannerActive) return;
-
-      // Clonar el card fuera del target
-      releasedObject = card.cloneNode();
-      releasedObject.setAttribute("position", "0 0 -2"); // queda frente a cámara
-      releasedObject.setAttribute("id", "released-card");
-
-      sceneEl.appendChild(releasedObject);
-
-      // Pausar el rastreo de MindAR
-      const mindarSystem = sceneEl.systems["mindar-image-system"];
-      mindarSystem.stop(); // detiene el escaneo
-
-      isScannerActive = false;
+    document.querySelector("#next").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % cards.length;
+      showCard(currentIndex);
     });
 
-    // Al presionar "Reescanear"
-    btnReescanear.addEventListener("click", () => {
-      if (releasedObject) {
-        releasedObject.parentNode.removeChild(releasedObject);
-        releasedObject = null;
-      }
-
-      // Reinicia el rastreo de MindAR
-      const mindarSystem = sceneEl.systems["mindar-image-system"];
-      mindarSystem.start();
-
-      isScannerActive = true;
+    document.querySelector("#prev").addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      showCard(currentIndex);
     });
+
+    // Mostrar siempre el primer card al inicio
+    showCard(currentIndex);
   </script>
 </body>
 </html>
+
+
 
