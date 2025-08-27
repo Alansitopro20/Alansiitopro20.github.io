@@ -17,6 +17,7 @@
       display: flex;
       gap: 10px;
       z-index: 999;
+      visibility: hidden; /* Ocultos al inicio */
     }
     button {
       padding: 8px 14px;
@@ -33,8 +34,10 @@
   </style>
 </head>
 <body>
-  <!-- Controles de navegación -->
+  <!-- Controles -->
   <div id="ui">
+    <button id="liberar">Liberar</button>
+    <button id="reescanear">Reescanear</button>
     <button id="prev">⬅️ Anterior</button>
     <button id="next">➡️ Siguiente</button>
   </div>
@@ -126,6 +129,7 @@
       });
     }
 
+    // Botones de navegación
     document.querySelector("#next").addEventListener("click", () => {
       currentIndex = (currentIndex + 1) % cards.length;
       showCard(currentIndex);
@@ -136,8 +140,20 @@
       showCard(currentIndex);
     });
 
-    // Mostrar siempre el primer card al inicio
+    // Siempre arrancamos en el card 1
     showCard(currentIndex);
+
+    // Mostrar/ocultar botones cuando se detecta el marcador
+    const ui = document.querySelector("#ui");
+    const target = document.querySelector("#target");
+
+    target.addEventListener("targetFound", () => {
+      ui.style.visibility = "visible";
+    });
+
+    target.addEventListener("targetLost", () => {
+      ui.style.visibility = "hidden";
+    });
   </script>
 </body>
 </html>
