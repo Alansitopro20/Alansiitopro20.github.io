@@ -1,159 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Multi Targets Cards</title>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-three.prod.js"></script>
+  <title>AR con múltiples targets</title>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.131.3/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar/dist/mindar-image-three.prod.js"></script>
   <style>
     body { margin: 0; overflow: hidden; font-family: Verdana; }
-
-    /* Contenedor general de las tarjetas */
-    .card-container {
-      position: absolute;
-      top: 4px;
+    #ui {
+      position: fixed;
+      bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
       z-index: 10;
-      display: none; /* Ocultas por defecto */
     }
-
     .card {
-      width: 160px;
-      height: 90px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bold;
-      border-radius: 10px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.4);
-      color: white;
-    }
-
-    .card-set1 .card { background: rgba(0, 150, 255, 0.6); }
-    .card-set2 .card { background: rgba(255, 80, 100, 0.6); }
-
-    .controls {
-      position: absolute;
-      top: 110px;
+      display: none;
+      position: fixed;
+      top: 20%;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      z-index: 10;
-      display: none; /* Ocultos por defecto */
+      padding: 20px;
+      width: 200px;
+      height: 120px;
+      border-radius: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      z-index: 9;
     }
-
-    button {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 8px;
-      background: #222;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:hover { background: #444; }
+    .group1 { background: #0077cc; } /* Cards target1 */
+    .group2 { background: #cc5500; } /* Cards target2 */
   </style>
 </head>
 <body>
-  <!-- Set 1 (Cards 1-10) -->
-  <div class="card-container card-set1" id="cardSet1">
-    <div class="card">Card 1</div>
-    <div class="card">Card 2</div>
-    <div class="card">Card 3</div>
-    <div class="card">Card 4</div>
-    <div class="card">Card 5</div>
-    <div class="card">Card 6</div>
-    <div class="card">Card 7</div>
-    <div class="card">Card 8</div>
-    <div class="card">Card 9</div>
-    <div class="card">Card 10</div>
-  </div>
-
-  <!-- Set 2 (Cards 11-17) -->
-  <div class="card-container card-set2" id="cardSet2">
-    <div class="card">Card 11</div>
-    <div class="card">Card 12</div>
-    <div class="card">Card 13</div>
-    <div class="card">Card 14</div>
-    <div class="card">Card 15</div>
-    <div class="card">Card 16</div>
-    <div class="card">Card 17</div>
-  </div>
-
-  <!-- Controles -->
-  <div class="controls" id="controls">
+  <div id="ui">
     <button id="prevBtn">⬅️</button>
     <button id="nextBtn">➡️</button>
   </div>
 
-  <script type="module">
-    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.module.js";
-    import { MindARThree } from "https://cdn.jsdelivr.net/npm/mind-ar@1.1.5/dist/mindar-image-three.prod.js";
+  <!-- Cards target1 (1-10) -->
+  <div id="cards1">
+    <div class="card group1" id="card1">Card 1</div>
+    <div class="card group1" id="card2">Card 2</div>
+    <div class="card group1" id="card3">Card 3</div>
+    <div class="card group1" id="card4">Card 4</div>
+    <div class="card group1" id="card5">Card 5</div>
+    <div class="card group1" id="card6">Card 6</div>
+    <div class="card group1" id="card7">Card 7</div>
+    <div class="card group1" id="card8">Card 8</div>
+    <div class="card group1" id="card9">Card 9</div>
+    <div class="card group1" id="card10">Card 10</div>
+  </div>
 
-    // Inicializar MindAR
-    const mindarThree = new MindARThree({
+  <!-- Cards target2 (11-17) -->
+  <div id="cards2">
+    <div class="card group2" id="card11">Card 11</div>
+    <div class="card group2" id="card12">Card 12</div>
+    <div class="card group2" id="card13">Card 13</div>
+    <div class="card group2" id="card14">Card 14</div>
+    <div class="card group2" id="card15">Card 15</div>
+    <div class="card group2" id="card16">Card 16</div>
+    <div class="card group2" id="card17">Card 17</div>
+  </div>
+
+  <script type="module">
+    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
       container: document.body,
-      imageTargetSrc: "./targets1.mind", // 🔹 Cambia si usas otro archivo
+      imageTargetSrc: "./targets.mind", // Un único archivo con target1 y target2
     });
 
-    const { renderer, scene, camera } = mindarThree;
+    const {renderer, scene, camera} = mindarThree;
 
-    // Targets
-    const anchor1 = mindarThree.addAnchor(0); // target 1
-    const anchor2 = mindarThree.addAnchor(1); // target 2
+    const anchor1 = mindarThree.addAnchor(0); // target1
+    const anchor2 = mindarThree.addAnchor(1); // target2
 
-    const cardSet1 = document.getElementById("cardSet1");
-    const cardSet2 = document.getElementById("cardSet2");
-    const controls = document.getElementById("controls");
-
-    let currentSet = null;
+    let activeGroup = null;
     let currentIndex = 0;
+    let cards = [];
 
-    function showCards(set, index = 0) {
-      // Ocultar todo
-      cardSet1.style.display = "none";
-      cardSet2.style.display = "none";
-      controls.style.display = "none";
+    const groups = {
+      group1: Array.from(document.querySelectorAll("#cards1 .card")),
+      group2: Array.from(document.querySelectorAll("#cards2 .card")),
+    };
 
-      if (set) {
-        currentSet = set;
-        currentIndex = index;
-        set.style.display = "flex";
-        controls.style.display = "flex";
-        updateVisibleCard();
-      }
+    function showGroup(groupName) {
+      hideAll();
+      activeGroup = groups[groupName];
+      currentIndex = 0;
+      if (activeGroup.length > 0) activeGroup[0].style.display = "block";
     }
 
-    function updateVisibleCard() {
-      if (!currentSet) return;
-      const cards = currentSet.querySelectorAll(".card");
-      cards.forEach((c, i) => c.style.display = (i === currentIndex ? "flex" : "none"));
+    function hideAll() {
+      Object.values(groups).flat().forEach(c => c.style.display = "none");
     }
 
     document.getElementById("prevBtn").addEventListener("click", () => {
-      const cards = currentSet.querySelectorAll(".card");
-      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-      updateVisibleCard();
+      if (!activeGroup) return;
+      activeGroup[currentIndex].style.display = "none";
+      currentIndex = (currentIndex - 1 + activeGroup.length) % activeGroup.length;
+      activeGroup[currentIndex].style.display = "block";
     });
 
     document.getElementById("nextBtn").addEventListener("click", () => {
-      const cards = currentSet.querySelectorAll(".card");
-      currentIndex = (currentIndex + 1) % cards.length;
-      updateVisibleCard();
+      if (!activeGroup) return;
+      activeGroup[currentIndex].style.display = "none";
+      currentIndex = (currentIndex + 1) % activeGroup.length;
+      activeGroup[currentIndex].style.display = "block";
     });
 
-    // Eventos de detección
-    anchor1.onTargetFound = () => showCards(cardSet1, 0);
-    anchor1.onTargetLost = () => showCards(null);
+    anchor1.onTargetFound = () => { showGroup("group1"); };
+    anchor1.onTargetLost = () => { hideAll(); activeGroup = null; };
 
-    anchor2.onTargetFound = () => showCards(cardSet2, 0);
-    anchor2.onTargetLost = () => showCards(null);
+    anchor2.onTargetFound = () => { showGroup("group2"); };
+    anchor2.onTargetLost = () => { hideAll(); activeGroup = null; };
 
-    // Arrancar escaneo inmediatamente 🔥
+    // Iniciar
     mindarThree.start();
     renderer.setAnimationLoop(() => {
       renderer.render(scene, camera);
