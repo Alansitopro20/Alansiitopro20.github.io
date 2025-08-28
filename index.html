@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>AR con MindAR</title>
-  <!-- Librerías necesarias -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
@@ -33,7 +32,6 @@
   </style>
 </head>
 <body>
-  <!-- Controles de navegación -->
   <div id="ui">
     <button id="prev">⬅️ Anterior</button>
     <button id="next">➡️ Siguiente</button>
@@ -43,12 +41,12 @@
     mindar-image="imageTargetSrc: ./assets/targets.mind;" 
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
-    id="scene"
+    id="scene0"
   >
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Target 0 -->
     <a-entity mindar-image-target="targetIndex: 0" id="target0">
+      <!-- Cards 1-5 -->
       <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" opacity="0.6" visible="true"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 1" align="center" position="0 0 0.01" color="white"></a-text>
@@ -70,9 +68,18 @@
         <a-text value="Card 5" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
     </a-entity>
+  </a-scene>
 
-    <!-- Target 1 -->
-    <a-entity mindar-image-target="targetIndex: 1" id="target1">
+  <a-scene
+    mindar-image="imageTargetSrc: ./assets/targets1.mind;" 
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    id="scene1"
+  >
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0" id="target1">
+      <!-- Cards 10-15 -->
       <a-plane id="card10" position="0 0.9 0" width="1.5" height="0.6" color="#FF5733" opacity="0.6" visible="true"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 10" align="center" position="0 0 0.01" color="white"></a-text>
@@ -98,12 +105,10 @@
         <a-text value="Card 15" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
     </a-entity>
-
   </a-scene>
 
   <script>
-    // Cards por target
-    const target0Cards = [
+    const cards0 = [
       document.querySelector("#card1"),
       document.querySelector("#card2"),
       document.querySelector("#card3"),
@@ -111,7 +116,7 @@
       document.querySelector("#card5")
     ];
 
-    const target1Cards = [
+    const cards1 = [
       document.querySelector("#card10"),
       document.querySelector("#card11"),
       document.querySelector("#card12"),
@@ -120,7 +125,7 @@
       document.querySelector("#card15")
     ];
 
-    let currentCards = target0Cards;
+    let currentCards = cards0;
     let currentIndex = 0;
 
     function showCard(index) {
@@ -137,32 +142,32 @@
       showCard(currentIndex);
     });
 
-    // Inicialmente mostrar target0
     showCard(currentIndex);
 
-    // Manejo de eventos MindAR
+    // Manejo de eventos por target
     const target0 = document.querySelector("#target0");
     const target1 = document.querySelector("#target1");
 
     target0.addEventListener("targetFound", () => {
-      currentCards = target0Cards;
+      currentCards = cards0;
       currentIndex = 0;
       showCard(currentIndex);
+      cards1.forEach(c => c.setAttribute("visible", false));
     });
 
     target0.addEventListener("targetLost", () => {
-      target0Cards.forEach(c=>c.setAttribute("visible", false));
+      cards0.forEach(c => c.setAttribute("visible", false));
     });
 
     target1.addEventListener("targetFound", () => {
-      currentCards = target1Cards;
+      currentCards = cards1;
       currentIndex = 0;
       showCard(currentIndex);
-      target0Cards.forEach(c=>c.setAttribute("visible", false)); // Ocultar target0
+      cards0.forEach(c => c.setAttribute("visible", false));
     });
 
     target1.addEventListener("targetLost", () => {
-      target1Cards.forEach(c=>c.setAttribute("visible", false));
+      cards1.forEach(c => c.setAttribute("visible", false));
     });
 
   </script>
