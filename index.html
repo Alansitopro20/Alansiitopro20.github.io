@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>AR con MindAR</title>
+  <!-- Librerías necesarias -->
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
   <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
@@ -32,6 +33,7 @@
   </style>
 </head>
 <body>
+  <!-- Controles de navegación -->
   <div id="ui">
     <button id="prev">⬅️ Anterior</button>
     <button id="next">➡️ Siguiente</button>
@@ -41,82 +43,63 @@
     mindar-image="imageTargetSrc: ./assets/targets.mind;" 
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
-    id="scene0"
+    id="scene"
   >
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
+    <!-- Target 0: Cards 1-5 -->
     <a-entity mindar-image-target="targetIndex: 0" id="target0">
-      <!-- Cards 1-5 -->
-      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" opacity="0.6" visible="true"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 1" align="center" position="0 0 0.01" color="white"></a-text>
+      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" opacity="0.6" visible="true" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 1" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 2" align="center" position="0 0 0.01" color="white"></a-text>
+      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 2" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 3" align="center" position="0 0 0.01" color="black"></a-text>
+      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 3" align="center" position="0 0 0.02" color="black" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card4" position="0 0.9 0" width="1.5" height="0.6" color="#DC3545" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 4" align="center" position="0 0 0.01" color="white"></a-text>
+      <a-plane id="card4" position="0 0.9 0" width="1.5" height="0.6" color="#DC3545" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 4" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card5" position="0 0.9 0" width="1.5" height="0.6" color="#6F42C1" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 5" align="center" position="0 0 0.01" color="white"></a-text>
+      <a-plane id="card5" position="0 0.9 0" width="1.5" height="0.6" color="#6F42C1" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 5" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
     </a-entity>
-  </a-scene>
 
-  <a-scene
-    mindar-image="imageTargetSrc: ./assets/targets1.mind;" 
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false"
-    id="scene1"
-  >
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-    <a-entity mindar-image-target="targetIndex: 0" id="target1">
-      <!-- Cards 10-15 -->
-      <a-plane id="card10" position="0 0.9 0" width="1.5" height="0.6" color="#FF5733" opacity="0.6" visible="true"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-       <a-text value="Card 10" align="center" position="0 0 0.03" color="white" side="double" shader="msdf"></a-text>
+    <!-- Target 1: Cards 10-15 -->
+    <a-entity mindar-image-target="targetIndex: 1" id="target1">
+      <a-plane id="card10" position="0 0.9 0" width="1.5" height="0.6" color="#1E90FF" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 10" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#33FF57" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 11" align="center" position="0 0 0.03" color="white"></a-text>
+      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#32CD32" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 11" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card12" position="0 0.9 0" width="1.5" height="0.6" color="#3357FF" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 12" align="center" position="0 0 0.02" color="white"></a-text>
+      <a-plane id="card12" position="0 0.9 0" width="1.5" height="0.6" color="#FFD700" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 12" align="center" position="0 0 0.02" color="black" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card13" position="0 0.9 0" width="1.5" height="0.6" color="#FF33A8" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 13" align="center" position="0 0 0.02" color="white"></a-text>
+      <a-plane id="card13" position="0 0.9 0" width="1.5" height="0.6" color="#FF4500" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 13" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card14" position="0 0.9 0" width="1.5" height="0.6" color="#A833FF" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 14" align="center" position="0 0 0.02" color="white"></a-text>
+      <a-plane id="card14" position="0 0.9 0" width="1.5" height="0.6" color="#9400D3" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 14" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
-      <a-plane id="card15" position="0 0.9 0" width="1.5" height="0.6" color="#33FFA8" opacity="0.6" visible="false"
-        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 15" align="center" position="0 0 0.02" color="white"></a-text>
+      <a-plane id="card15" position="0 0.9 0" width="1.5" height="0.6" color="#20B2AA" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 15" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
       </a-plane>
     </a-entity>
+
   </a-scene>
 
   <script>
-    const cards0 = [
+    // Cards por target
+    const cardsTarget0 = [
       document.querySelector("#card1"),
       document.querySelector("#card2"),
       document.querySelector("#card3"),
       document.querySelector("#card4"),
       document.querySelector("#card5")
     ];
-
-    const cards1 = [
+    const cardsTarget1 = [
       document.querySelector("#card10"),
       document.querySelector("#card11"),
       document.querySelector("#card12"),
@@ -125,52 +108,49 @@
       document.querySelector("#card15")
     ];
 
-    let currentCards = cards0;
+    let currentCards = cardsTarget0;
     let currentIndex = 0;
 
     function showCard(index) {
-      currentCards.forEach((c,i) => c.setAttribute("visible", i===index));
+      currentCards.forEach((c,i)=>c.setAttribute("visible", i===index));
     }
 
-    document.querySelector("#next").addEventListener("click", () => {
+    document.querySelector("#next").addEventListener("click", ()=>{
       currentIndex = (currentIndex + 1) % currentCards.length;
       showCard(currentIndex);
     });
 
-    document.querySelector("#prev").addEventListener("click", () => {
+    document.querySelector("#prev").addEventListener("click", ()=>{
       currentIndex = (currentIndex - 1 + currentCards.length) % currentCards.length;
       showCard(currentIndex);
     });
 
+    // Inicial
     showCard(currentIndex);
 
-    // Manejo de eventos por target
+    // Manejo de targets
     const target0 = document.querySelector("#target0");
     const target1 = document.querySelector("#target1");
 
-    target0.addEventListener("targetFound", () => {
-      currentCards = cards0;
+    target0.addEventListener("targetFound", ()=>{
+      currentCards = cardsTarget0;
       currentIndex = 0;
       showCard(currentIndex);
-      cards1.forEach(c => c.setAttribute("visible", false));
+      cardsTarget1.forEach(c=>c.setAttribute("visible", false));
+    });
+    target0.addEventListener("targetLost", ()=>{
+      cardsTarget0.forEach(c=>c.setAttribute("visible", false));
     });
 
-    target0.addEventListener("targetLost", () => {
-      cards0.forEach(c => c.setAttribute("visible", false));
-    });
-
-    target1.addEventListener("targetFound", () => {
-      currentCards = cards1;
+    target1.addEventListener("targetFound", ()=>{
+      currentCards = cardsTarget1;
       currentIndex = 0;
       showCard(currentIndex);
-      cards0.forEach(c => c.setAttribute("visible", false));
+      cardsTarget0.forEach(c=>c.setAttribute("visible", false));
     });
-
-    target1.addEventListener("targetLost", () => {
-      cards1.forEach(c => c.setAttribute("visible", false));
+    target1.addEventListener("targetLost", ()=>{
+      cardsTarget1.forEach(c=>c.setAttribute("visible", false));
     });
-
   </script>
 </body>
 </html>
-
