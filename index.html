@@ -19,17 +19,26 @@
       z-index: 999;
     }
     button {
-      padding: 8px 14px;
-      font-size: 14px;
-      border: none;
-      border-radius: 6px;
-      background: rgba(0, 123, 255, 0.8);
-      color: white;
-      cursor: pointer;
-    }
-    button:hover {
-      background: rgba(0, 123, 255, 1);
-    }
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 20px; /* redondeado tipo la imagen */
+  background: linear-gradient(90deg, #6a5af9, #2b63f0); /* color normal (azul) */
+  color: white;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #000; /* sombra como en la imagen */
+  transition: background 0.3s;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #4c4cff, #1a4ee6); /* un poco más intenso al pasar el mouse */
+}
+
+/* Clase que se activa al hacer click */
+button.active {
+  background: linear-gradient(90deg, #ff41b4, #ff6ecf); /* color al hacer click (rosa) */
+}
+
   </style>
 </head>
 <body>
@@ -154,3 +163,4 @@
   </script>
 </body>
 </html>
+
