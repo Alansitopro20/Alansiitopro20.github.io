@@ -2,126 +2,144 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>AR con múltiples targets</title>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.131.3/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar/dist/mindar-image-three.prod.js"></script>
+  <title>AR con MindAR</title>
+  <!-- Librerías necesarias -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
   <style>
-    body { margin: 0; overflow: hidden; font-family: Verdana; }
+    body { margin: 0; overflow: hidden; }
     #ui {
-      position: fixed;
-      bottom: 20px;
+      position: absolute;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
-      z-index: 10;
+      z-index: 999;
     }
-    .card {
-      display: none;
-      position: fixed;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 20px;
-      width: 200px;
-      height: 120px;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    button {
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(0, 123, 255, 0.8);
       color: white;
-      font-size: 20px;
-      text-align: center;
-      z-index: 9;
+      cursor: pointer;
     }
-    .group1 { background: #0077cc; } /* Cards target1 */
-    .group2 { background: #cc5500; } /* Cards target2 */
+    button:hover {
+      background: rgba(0, 123, 255, 1);
+    }
   </style>
 </head>
 <body>
+  <!-- Controles de navegación -->
   <div id="ui">
-    <button id="prevBtn">⬅️</button>
-    <button id="nextBtn">➡️</button>
+    <button id="prev">⬅️ Anterior</button>
+    <button id="next">➡️ Siguiente</button>
   </div>
 
-  <!-- Cards target1 (1-10) -->
-  <div id="cards1">
-    <div class="card group1" id="card1">Card 1</div>
-    <div class="card group1" id="card2">Card 2</div>
-    <div class="card group1" id="card3">Card 3</div>
-    <div class="card group1" id="card4">Card 4</div>
-    <div class="card group1" id="card5">Card 5</div>
-    <div class="card group1" id="card6">Card 6</div>
-    <div class="card group1" id="card7">Card 7</div>
-    <div class="card group1" id="card8">Card 8</div>
-    <div class="card group1" id="card9">Card 9</div>
-    <div class="card group1" id="card10">Card 10</div>
-  </div>
+  <a-scene
+    mindar-image="imageTargetSrc: ./assets/targets.mind;" 
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    id="scene"
+  >
+    <!-- Cámara -->
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <!-- Cards target2 (11-17) -->
-  <div id="cards2">
-    <div class="card group2" id="card11">Card 11</div>
-    <div class="card group2" id="card12">Card 12</div>
-    <div class="card group2" id="card13">Card 13</div>
-    <div class="card group2" id="card14">Card 14</div>
-    <div class="card group2" id="card15">Card 15</div>
-    <div class="card group2" id="card16">Card 16</div>
-    <div class="card group2" id="card17">Card 17</div>
-  </div>
+    <!-- Target 1 con 5 cards -->
+    <a-entity mindar-image-target="targetIndex: 0" id="target1">
+      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" opacity="0.6" visible="false">
+        <a-text value="Card 1" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" opacity="0.6" visible="false">
+        <a-text value="Card 2" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" opacity="0.6" visible="false">
+        <a-text value="Card 3" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+      <a-plane id="card4" position="0 0.9 0" width="1.5" height="0.6" color="#DC3545" opacity="0.6" visible="false">
+        <a-text value="Card 4" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card5" position="0 0.9 0" width="1.5" height="0.6" color="#6F42C1" opacity="0.6" visible="false">
+        <a-text value="Card 5" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+    </a-entity>
 
-  <script type="module">
-    const mindarThree = new window.MINDAR.IMAGE.MindARThree({
-      container: document.body,
-      imageTargetSrc: "./targets.mind", // Un único archivo con target1 y target2
-    });
+    <!-- Target 2 con 7 cards -->
+    <a-entity mindar-image-target="targetIndex: 1" id="target2">
+      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#FF5733" opacity="0.6" visible="false">
+        <a-text value="Card 11" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card12" position="0 0.9 0" width="1.5" height="0.6" color="#33FF57" opacity="0.6" visible="false">
+        <a-text value="Card 12" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+      <a-plane id="card13" position="0 0.9 0" width="1.5" height="0.6" color="#3357FF" opacity="0.6" visible="false">
+        <a-text value="Card 13" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card14" position="0 0.9 0" width="1.5" height="0.6" color="#FFC300" opacity="0.6" visible="false">
+        <a-text value="Card 14" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+      <a-plane id="card15" position="0 0.9 0" width="1.5" height="0.6" color="#DAF7A6" opacity="0.6" visible="false">
+        <a-text value="Card 15" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+      <a-plane id="card16" position="0 0.9 0" width="1.5" height="0.6" color="#C70039" opacity="0.6" visible="false">
+        <a-text value="Card 16" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card17" position="0 0.9 0" width="1.5" height="0.6" color="#900C3F" opacity="0.6" visible="false">
+        <a-text value="Card 17" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+    </a-entity>
 
-    const {renderer, scene, camera} = mindarThree;
+  </a-scene>
 
-    const anchor1 = mindarThree.addAnchor(0); // target1
-    const anchor2 = mindarThree.addAnchor(1); // target2
+  <script>
+    // Dos grupos de cards
+    const cards1 = [ "#card1", "#card2", "#card3", "#card4", "#card5" ].map(id => document.querySelector(id));
+    const cards2 = [ "#card11", "#card12", "#card13", "#card14", "#card15", "#card16", "#card17" ].map(id => document.querySelector(id));
 
-    let activeGroup = null;
+    let activeCards = [];
     let currentIndex = 0;
-    let cards = [];
 
-    const groups = {
-      group1: Array.from(document.querySelectorAll("#cards1 .card")),
-      group2: Array.from(document.querySelectorAll("#cards2 .card")),
-    };
+    function showCard(index) {
+      activeCards.forEach((c, i) => c.setAttribute("visible", i === index));
+    }
 
-    function showGroup(groupName) {
-      hideAll();
-      activeGroup = groups[groupName];
+    document.querySelector("#next").addEventListener("click", () => {
+      if (activeCards.length === 0) return;
+      currentIndex = (currentIndex + 1) % activeCards.length;
+      showCard(currentIndex);
+    });
+
+    document.querySelector("#prev").addEventListener("click", () => {
+      if (activeCards.length === 0) return;
+      currentIndex = (currentIndex - 1 + activeCards.length) % activeCards.length;
+      showCard(currentIndex);
+    });
+
+    // Eventos para detectar targets
+    const target1 = document.querySelector("#target1");
+    const target2 = document.querySelector("#target2");
+
+    target1.addEventListener("targetFound", () => {
+      activeCards = cards1;
       currentIndex = 0;
-      if (activeGroup.length > 0) activeGroup[0].style.display = "block";
-    }
-
-    function hideAll() {
-      Object.values(groups).flat().forEach(c => c.style.display = "none");
-    }
-
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      if (!activeGroup) return;
-      activeGroup[currentIndex].style.display = "none";
-      currentIndex = (currentIndex - 1 + activeGroup.length) % activeGroup.length;
-      activeGroup[currentIndex].style.display = "block";
+      showCard(currentIndex);
+    });
+    target1.addEventListener("targetLost", () => {
+      activeCards.forEach(c => c.setAttribute("visible", false));
+      activeCards = [];
     });
 
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      if (!activeGroup) return;
-      activeGroup[currentIndex].style.display = "none";
-      currentIndex = (currentIndex + 1) % activeGroup.length;
-      activeGroup[currentIndex].style.display = "block";
+    target2.addEventListener("targetFound", () => {
+      activeCards = cards2;
+      currentIndex = 0;
+      showCard(currentIndex);
     });
-
-    anchor1.onTargetFound = () => { showGroup("group1"); };
-    anchor1.onTargetLost = () => { hideAll(); activeGroup = null; };
-
-    anchor2.onTargetFound = () => { showGroup("group2"); };
-    anchor2.onTargetLost = () => { hideAll(); activeGroup = null; };
-
-    // Iniciar
-    mindarThree.start();
-    renderer.setAnimationLoop(() => {
-      renderer.render(scene, camera);
+    target2.addEventListener("targetLost", () => {
+      activeCards.forEach(c => c.setAttribute("visible", false));
+      activeCards = [];
     });
   </script>
 </body>
