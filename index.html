@@ -1,194 +1,146 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>AR Cards con dos marcadores</title>
-  <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
+  <meta charset="UTF-8">
+  <title>AR con MindAR</title>
+  <!-- Librerías necesarias -->
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
   <style>
-    body { margin: 0; overflow: hidden; font-family: sans-serif; }
-
+    body { margin: 0; overflow: hidden; }
     #ui {
       position: absolute;
-      bottom: 20px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
       gap: 10px;
+      z-index: 999;
     }
-
     button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      padding: 8px 14px;
       font-size: 14px;
-      font-weight: bold;
-    }
-
-    /* Cards */
-    .card {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 200px;
-      height: 120px;
-      display: none;
-      justify-content: center;
-      align-items: center;
+      border: none;
+      border-radius: 6px;
+      background: rgba(0, 123, 255, 0.8);
       color: white;
-      font-size: 22px;
-      font-weight: bold;
-      border-radius: 12px;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+      cursor: pointer;
     }
-
-    /* Cards set A (marcador 1) */
-    .cardA:nth-child(1){background:red;}
-    .cardA:nth-child(2){background:blue;}
-    .cardA:nth-child(3){background:green;}
-    .cardA:nth-child(4){background:orange;}
-    .cardA:nth-child(5){background:purple;}
-
-    /* Cards set B (marcador 2) */
-    .cardB:nth-child(1){background:teal;}
-    .cardB:nth-child(2){background:brown;}
-    .cardB:nth-child(3){background:darkblue;}
-    .cardB:nth-child(4){background:darkred;}
-    .cardB:nth-child(5){background:darkgreen;}
-    .cardB:nth-child(6){background:darkorange;}
-    .cardB:nth-child(7){background:indigo;}
-
+    button:hover {
+      background: rgba(0, 123, 255, 1);
+    }
   </style>
 </head>
 <body>
-  <!-- Cámara AR -->
-  <a-scene mindar-image="imageTargetSrc: ./assets/targets.mind, ./assets/targets1.mind;" embedded color-space="sRGB">
+  <!-- Controles de navegación -->
+  <div id="ui">
+    <button id="prev">⬅️ Anterior</button>
+    <button id="next">➡️ Siguiente</button>
+  </div>
+
+  <a-scene
+    mindar-image="imageTargetSrc: ./assets/targets.mind;" 
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    id="scene"
+  >
+    <!-- Cámara -->
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Marcador 1 -->
-    <a-entity mindar-image-target="targetIndex: 0">
-      <a-plane color="yellow" position="0 0 0" height="0.5" width="0.5"></a-plane>
-    </a-entity>
+    <!-- Target con 5 cards -->
+    <a-entity mindar-image-target="targetIndex: 0" id="target">
+      
+      <!-- Card 1 -->
+      <a-plane id="card1"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#007BFF" 
+        opacity="0.6"
+        visible="true"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 1" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
 
-    <!-- Marcador 2 -->
-    <a-entity mindar-image-target="targetIndex: 1">
-      <a-plane color="cyan" position="0 0 0" height="0.5" width="0.5"></a-plane>
+      <!-- Card 2 -->
+      <a-plane id="card2"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#28A745" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 2" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+
+      <!-- Card 3 -->
+      <a-plane id="card3"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#FFC107" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 3" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+
+      <!-- Card 4 -->
+      <a-plane id="card4"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#DC3545" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 4" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+
+      <!-- Card 5 -->
+      <a-plane id="card5"
+        position="0 0.9 0"
+        width="1.5" height="0.6" 
+        color="#6F42C1" 
+        opacity="0.6"
+        visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 5" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+
     </a-entity>
   </a-scene>
 
-  <!-- UI botones -->
-  <div id="ui" style="display:none;">
-    <button id="liberarBtn">Liberar</button>
-    <button id="reescanearBtn">Reescanear</button>
-    <button id="prevBtn">⟨ Anterior</button>
-    <button id="nextBtn">Siguiente ⟩</button>
-  </div>
-
-  <!-- Cards Set A -->
-  <div id="cardsA">
-    <div class="card cardA">1</div>
-    <div class="card cardA">2</div>
-    <div class="card cardA">3</div>
-    <div class="card cardA">4</div>
-    <div class="card cardA">5</div>
-  </div>
-
-  <!-- Cards Set B -->
-  <div id="cardsB">
-    <div class="card cardB">11</div>
-    <div class="card cardB">12</div>
-    <div class="card cardB">13</div>
-    <div class="card cardB">14</div>
-    <div class="card cardB">15</div>
-    <div class="card cardB">16</div>
-    <div class="card cardB">17</div>
-  </div>
-
   <script>
-    const ui = document.getElementById("ui");
-    const liberarBtn = document.getElementById("liberarBtn");
-    const reescanearBtn = document.getElementById("reescanearBtn");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+    const cards = [
+      document.querySelector("#card1"),
+      document.querySelector("#card2"),
+      document.querySelector("#card3"),
+      document.querySelector("#card4"),
+      document.querySelector("#card5")
+    ];
 
-    const cardsA = document.querySelectorAll("#cardsA .card");
-    const cardsB = document.querySelectorAll("#cardsB .card");
-
-    let currentSet = null; // "A" o "B"
     let currentIndex = 0;
 
-    function showCard(set, index){
-      // Oculta todo
-      cardsA.forEach(c=>c.style.display="none");
-      cardsB.forEach(c=>c.style.display="none");
-      // Muestra el card correcto
-      if(set==="A") cardsA[index].style.display="flex";
-      if(set==="B") cardsB[index].style.display="flex";
+    function showCard(index) {
+      cards.forEach((c, i) => {
+        c.setAttribute("visible", i === index);
+      });
     }
 
-    // Botones
-    prevBtn.addEventListener("click", ()=>{
-      if(currentSet==="A"){
-        currentIndex = (currentIndex - 1 + cardsA.length) % cardsA.length;
-        showCard("A", currentIndex);
-      } else if(currentSet==="B"){
-        currentIndex = (currentIndex - 1 + cardsB.length) % cardsB.length;
-        showCard("B", currentIndex);
-      }
+    document.querySelector("#next").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % cards.length;
+      showCard(currentIndex);
     });
 
-    nextBtn.addEventListener("click", ()=>{
-      if(currentSet==="A"){
-        currentIndex = (currentIndex + 1) % cardsA.length;
-        showCard("A", currentIndex);
-      } else if(currentSet==="B"){
-        currentIndex = (currentIndex + 1) % cardsB.length;
-        showCard("B", currentIndex);
-      }
+    document.querySelector("#prev").addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      showCard(currentIndex);
     });
 
-    liberarBtn.addEventListener("click", ()=>{
-      cardsA.forEach(c=>c.style.display="none");
-      cardsB.forEach(c=>c.style.display="none");
-      ui.style.display="none";
-      currentSet=null;
-    });
-
-    reescanearBtn.addEventListener("click", ()=>{
-      cardsA.forEach(c=>c.style.display="none");
-      cardsB.forEach(c=>c.style.display="none");
-      currentSet=null;
-      ui.style.display="none";
-    });
-
-    // Eventos de detección
-    document.querySelector('[mindar-image-target="targetIndex: 0"]').addEventListener("targetFound", ()=>{
-      currentSet="A";
-      currentIndex=0;
-      showCard("A",0);
-      ui.style.display="flex";
-    });
-
-    document.querySelector('[mindar-image-target="targetIndex: 1"]').addEventListener("targetFound", ()=>{
-      currentSet="B";
-      currentIndex=0;
-      showCard("B",0);
-      ui.style.display="flex";
-    });
-
-    document.querySelector('[mindar-image-target="targetIndex: 0"]').addEventListener("targetLost", ()=>{
-      if(currentSet==="A") ui.style.display="none";
-    });
-
-    document.querySelector('[mindar-image-target="targetIndex: 1"]').addEventListener("targetLost", ()=>{
-      if(currentSet==="B") ui.style.display="none";
-    });
+    // Mostrar siempre el primer card al inicio
+    showCard(currentIndex);
   </script>
 </body>
 </html>
-
-
 
 
 
