@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -40,7 +40,7 @@
   </div>
 
   <a-scene
-    mindar-image="imageTargetSrc: ./assets/targets.mind;" 
+    mindar-image="imageTargetSrc: ./assets/targets.mind, ./assets/targets1.mind;" 
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
     id="scene"
@@ -48,69 +48,67 @@
     <!-- Cámara -->
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Target con 5 cards -->
-    <a-entity mindar-image-target="targetIndex: 0" id="target">
-      
-      <!-- Card 1 -->
-      <a-plane id="card1"
-        position="0 0.9 0"
-        width="1.5" height="0.6" 
-        color="#007BFF" 
-        opacity="0.6"
-        visible="true"
+    <!-- Target 0: Cards 1 a 5 -->
+    <a-entity mindar-image-target="targetIndex: 0" id="target0">
+      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" opacity="0.6" visible="true"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 1" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
-
-      <!-- Card 2 -->
-      <a-plane id="card2"
-        position="0 0.9 0"
-        width="1.5" height="0.6" 
-        color="#28A745" 
-        opacity="0.6"
-        visible="false"
+      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" opacity="0.6" visible="false"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 2" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
-
-      <!-- Card 3 -->
-      <a-plane id="card3"
-        position="0 0.9 0"
-        width="1.5" height="0.6" 
-        color="#FFC107" 
-        opacity="0.6"
-        visible="false"
+      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" opacity="0.6" visible="false"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 3" align="center" position="0 0 0.01" color="black"></a-text>
       </a-plane>
-
-      <!-- Card 4 -->
-      <a-plane id="card4"
-        position="0 0.9 0"
-        width="1.5" height="0.6" 
-        color="#DC3545" 
-        opacity="0.6"
-        visible="false"
+      <a-plane id="card4" position="0 0.9 0" width="1.5" height="0.6" color="#DC3545" opacity="0.6" visible="false"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 4" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
-
-      <!-- Card 5 -->
-      <a-plane id="card5"
-        position="0 0.9 0"
-        width="1.5" height="0.6" 
-        color="#6F42C1" 
-        opacity="0.6"
-        visible="false"
+      <a-plane id="card5" position="0 0.9 0" width="1.5" height="0.6" color="#6F42C1" opacity="0.6" visible="false"
         material="transparent:true; shader:standard; roughness:0.1; metalness:1">
         <a-text value="Card 5" align="center" position="0 0 0.01" color="white"></a-text>
       </a-plane>
-
     </a-entity>
+
+    <!-- Target 1: Cards 11 a 17 -->
+    <a-entity mindar-image-target="targetIndex: 1" id="target1">
+      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#FF5722" opacity="0.6" visible="true"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 11" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card12" position="0 0.9 0" width="1.5" height="0.6" color="#009688" opacity="0.6" visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 12" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card13" position="0 0.9 0" width="1.5" height="0.6" color="#3F51B5" opacity="0.6" visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 13" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card14" position="0 0.9 0" width="1.5" height="0.6" color="#8BC34A" opacity="0.6" visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 14" align="center" position="0 0 0.01" color="black"></a-text>
+      </a-plane>
+      <a-plane id="card15" position="0 0.9 0" width="1.5" height="0.6" color="#E91E63" opacity="0.6" visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 15" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card16" position="0 0.9 0" width="1.5" height="0.6" color="#795548" opacity="0.6" visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 16" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card17" position="0 0.9 0" width="1.5" height="0.6" color="#9C27B0" opacity="0.6" visible="false"
+        material="transparent:true; shader:standard; roughness:0.1; metalness:1">
+        <a-text value="Card 17" align="center" position="0 0 0.01" color="white"></a-text>
+      </a-plane>
+    </a-entity>
+
   </a-scene>
 
   <script>
-    const cards = [
+    // Dos conjuntos de cards
+    const cardsSet1 = [
       document.querySelector("#card1"),
       document.querySelector("#card2"),
       document.querySelector("#card3"),
@@ -118,29 +116,52 @@
       document.querySelector("#card5")
     ];
 
+    const cardsSet2 = [
+      document.querySelector("#card11"),
+      document.querySelector("#card12"),
+      document.querySelector("#card13"),
+      document.querySelector("#card14"),
+      document.querySelector("#card15"),
+      document.querySelector("#card16"),
+      document.querySelector("#card17")
+    ];
+
+    let activeSet = cardsSet1;  // por defecto
     let currentIndex = 0;
 
     function showCard(index) {
-      cards.forEach((c, i) => {
+      activeSet.forEach((c, i) => {
         c.setAttribute("visible", i === index);
       });
     }
 
     document.querySelector("#next").addEventListener("click", () => {
-      currentIndex = (currentIndex + 1) % cards.length;
+      currentIndex = (currentIndex + 1) % activeSet.length;
       showCard(currentIndex);
     });
 
     document.querySelector("#prev").addEventListener("click", () => {
-      currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+      currentIndex = (currentIndex - 1 + activeSet.length) % activeSet.length;
       showCard(currentIndex);
     });
 
-    // Mostrar siempre el primer card al inicio
-    showCard(currentIndex);
+    // Cuando se detecta target 0 → activar set 1
+    document.querySelector("#target0").addEventListener("targetFound", () => {
+      activeSet = cardsSet1;
+      currentIndex = 0;
+      showCard(currentIndex);
+      // Ocultar set2
+      cardsSet2.forEach(c => c.setAttribute("visible", false));
+    });
+
+    // Cuando se detecta target 1 → activar set 2
+    document.querySelector("#target1").addEventListener("targetFound", () => {
+      activeSet = cardsSet2;
+      currentIndex = 0;
+      showCard(currentIndex);
+      // Ocultar set1
+      cardsSet1.forEach(c => c.setAttribute("visible", false));
+    });
   </script>
 </body>
 </html>
-
-
-
