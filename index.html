@@ -31,7 +31,6 @@
     }
     button:hover { background: rgba(0, 123, 255, 1); }
 
-    /* Pantalla de bienvenida */
     #intro {
     position: absolute;
     top: 0; 
@@ -39,7 +38,7 @@
     width: 100%; 
     height: 100%;
     background-image: url("portada1.png");
-    background-size: cover;       /* Ocupa todo el ancho y alto de la pantalla */
+    background-size: contain;     /* La imagen se ajusta para verse completa */
     background-position: center;  /* Centra la imagen */
     background-repeat: no-repeat; /* No se repite */
     
@@ -53,10 +52,10 @@
     z-index: 2000;
     transition: opacity 0.8s ease;
 
-    /* Mantener fondo estático y con opacidad */
-    animation: none;
-    opacity: 0.5; /* 50% de opacidad */
+    animation: none;  /* Fondo estático */
+    opacity: 0.5;     /* 50% de opacidad */
 }
+
 
     #intro.hidden {
       opacity: 0;
@@ -245,4 +244,5 @@
   </script>
 </body>
 </html>
+
 
