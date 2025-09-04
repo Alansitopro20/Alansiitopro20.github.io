@@ -10,6 +10,27 @@
   <style>
     body { margin: 0; overflow: hidden; }
 
+    /* UI navegación */
+    #ui {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 999;
+    }
+    button {
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(0, 123, 255, 0.8);
+      color: white;
+      cursor: pointer;
+    }
+    button:hover { background: rgba(0, 123, 255, 1); }
+
     /* Pantalla de bienvenida */
     #intro {
       position: absolute;
@@ -59,6 +80,7 @@
       color: #D1D4D1;
       margin-top: 10px;
       text-shadow: 1px 1px 3px #000;
+      animation: blink 2s infinite;
     }
 
     /* Animaciones */
@@ -68,16 +90,18 @@
       70% { transform: scale(0.9); }
       100% { transform: scale(1); }
     }
-
     @keyframes glow {
       from { text-shadow: 2px 2px 5px #000, 0 0 10px #3CAC3B, 0 0 20px #2A398D; }
       to { text-shadow: 2px 2px 5px #000, 0 0 15px #E61D25, 0 0 25px #474A4A; }
     }
-
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
     }
   </style>
 </head>
@@ -88,5 +112,126 @@
     <h1>¡Bienvenido!</h1>
     <p>Escanea una imagen para comenzar</p>
   </div>
+
+  <!-- Controles de navegación -->
+  <div id="ui">
+    <button id="prev">⬅️ Anterior</button>
+    <button id="next">➡️ Siguiente</button>
+  </div>
+
+  <!-- Escena AR -->
+  <a-scene
+    mindar-image="imageTargetSrc: ./assets/targets.mind;" 
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+    id="scene"
+  >
+    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+
+    <!-- Target 0 -->
+    <a-entity mindar-image-target="targetIndex: 0" id="target0">
+      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" visible="true">
+        <a-text value="Card 1" align="center" position="0 0 0.02" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" visible="false">
+        <a-text value="Card 2" align="center" position="0 0 0.02" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" visible="false">
+        <a-text value="Card 3" align="center" position="0 0 0.02" color="black"></a-text>
+      </a-plane>
+    </a-entity>
+
+    <!-- Target 1 -->
+    <a-entity mindar-image-target="targetIndex: 1" id="target1">
+      <a-plane id="card10" position="0 0.9 0" width="1.5" height="0.6" color="#1E90FF" visible="false">
+        <a-text value="Card 10" align="center" position="0 0 0.02" color="white"></a-text>
+      </a-plane>
+      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#32CD32" visible="false">
+        <a-text value="Card 11" align="center" position="0 0 0.02" color="white"></a-text>
+      </a-plane>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    const cardsTarget0 = [
+      document.querySelector("#card1"),
+      document.querySelector("#card2"),
+      document.querySelector("#card3")
+    ];
+    const cardsTarget1 = [
+      document.querySelector("#card10"),
+      document.querySelector("#card11")
+    ];
+
+    let currentCards = cardsTarget0;
+    let currentIndex = 0;
+
+    function showCard(index) {
+      currentCards.forEach((c,i)=>c.setAttribute("visible", i===index));
+    }
+
+    document.querySelector("#next").addEventListener("click", ()=>{
+      currentIndex = (currentIndex + 1) % currentCards.length;
+      showCard(currentIndex);
+    });
+    document.querySelector("#prev").addEventListener("click", ()=>{
+      currentIndex = (currentIndex - 1 + currentCards.length) % currentCards.length;
+      showCard(currentIndex);
+    });
+
+    showCard(currentIndex);
+
+    const intro = document.querySelector("#intro");
+    const target0 = document.querySelector("#target0");
+    const target1 = document.querySelector("#target1");
+
+    let returnTimer = null;
+
+    function hideIntro() {
+      if (!intro.classList.contains("hidden")) {
+        intro.classList.add("hidden");
+        setTimeout(()=> intro.style.display="none", 1000);
+      }
+    }
+
+    function showIntro() {
+      intro.style.display = "flex";
+      setTimeout(()=> intro.classList.remove("hidden"), 50);
+    }
+
+    function resetReturnTimer() {
+      if (returnTimer) clearTimeout(returnTimer);
+      returnTimer = setTimeout(()=> {
+        showIntro();
+        [...cardsTarget0, ...cardsTarget1].forEach(c=>c.setAttribute("visible", false));
+      }, 5000); // 5 segundos
+    }
+
+    target0.addEventListener("targetFound", ()=>{
+      hideIntro();
+      currentCards = cardsTarget0;
+      currentIndex = 0;
+      showCard(currentIndex);
+      cardsTarget1.forEach(c=>c.setAttribute("visible", false));
+      if (returnTimer) clearTimeout(returnTimer);
+    });
+    target1.addEventListener("targetFound", ()=>{
+      hideIntro();
+      currentCards = cardsTarget1;
+      currentIndex = 0;
+      showCard(currentIndex);
+      cardsTarget0.forEach(c=>c.setAttribute("visible", false));
+      if (returnTimer) clearTimeout(returnTimer);
+    });
+
+    target0.addEventListener("targetLost", ()=>{
+      cardsTarget0.forEach(c=>c.setAttribute("visible", false));
+      resetReturnTimer();
+    });
+    target1.addEventListener("targetLost", ()=>{
+      cardsTarget1.forEach(c=>c.setAttribute("visible", false));
+      resetReturnTimer();
+    });
+  </script>
 </body>
 </html>
