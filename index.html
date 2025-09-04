@@ -9,6 +9,8 @@
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
   <style>
     body { margin: 0; overflow: hidden; }
+
+    /* UI navegación */
     #ui {
       position: absolute;
       bottom: 10px;
@@ -19,29 +21,56 @@
       z-index: 999;
     }
     button {
-  padding: 8px 14px;
-  font-size: 14px;
-  border: none;
-  border-radius: 20px; /* redondeado tipo la imagen */
-  background: linear-gradient(90deg, #6a5af9, #2b63f0); /* color normal (azul) */
-  color: white;
-  cursor: pointer;
-  box-shadow: 4px 4px 0px #000; /* sombra como en la imagen */
-  transition: background 0.3s;
-}
+      padding: 8px 14px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background: rgba(0, 123, 255, 0.8);
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: rgba(0, 123, 255, 1);
+    }
 
-button:hover {
-  background: linear-gradient(90deg, #4c4cff, #1a4ee6); /* un poco más intenso al pasar el mouse */
-}
-
-/* Clase que se activa al hacer click */
-button.active {
-  background: linear-gradient(90deg, #ff41b4, #ff6ecf); /* color al hacer click (rosa) */
-}
-
+    /* Pantalla de portada */
+    #intro {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #002868, #BF0A30); /* Colores bandera estilo USA/Mexico */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      z-index: 2000; /* encima de todo */
+      transition: opacity 0.8s ease;
+    }
+    #intro h1 {
+      font-size: 2.5em;
+      margin: 0.3em 0;
+    }
+    #intro img {
+      width: 200px;
+      margin-bottom: 20px;
+    }
+    #intro.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Portada -->
+  <div id="intro">
+    <img src="https://upload.wikimedia.org/wikipedia/en/7/79/FIFA_World_Cup_2026_logo.svg" alt="Logo Mundial 2026">
+    <h1>Bienvenido al Mundial 2026</h1>
+    <p>Escanea una imagen para comenzar</p>
+  </div>
+
   <!-- Controles de navegación -->
   <div id="ui">
     <button id="prev">⬅️ Anterior</button>
@@ -56,44 +85,26 @@ button.active {
   >
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-    <!-- Target 0: Cards 1-5 -->
+    <!-- Target 0 -->
     <a-entity mindar-image-target="targetIndex: 0" id="target0">
-      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" opacity="0.6" visible="true" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 1" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
+      <a-plane id="card1" position="0 0.9 0" width="1.5" height="0.6" color="#007BFF" visible="true">
+        <a-text value="Card 1" align="center" position="0 0 0.02" color="white"></a-text>
       </a-plane>
-      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 2" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
+      <a-plane id="card2" position="0 0.9 0" width="1.5" height="0.6" color="#28A745" visible="false">
+        <a-text value="Card 2" align="center" position="0 0 0.02" color="white"></a-text>
       </a-plane>
-      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 3" align="center" position="0 0 0.02" color="black" shader="msdf"></a-text>
-      </a-plane>
-      <a-plane id="card4" position="0 0.9 0" width="1.5" height="0.6" color="#DC3545" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 4" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
-      </a-plane>
-      <a-plane id="card5" position="0 0.9 0" width="1.5" height="0.6" color="#6F42C1" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 5" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
+      <a-plane id="card3" position="0 0.9 0" width="1.5" height="0.6" color="#FFC107" visible="false">
+        <a-text value="Card 3" align="center" position="0 0 0.02" color="black"></a-text>
       </a-plane>
     </a-entity>
 
-    <!-- Target 1: Cards 10-15 -->
+    <!-- Target 1 -->
     <a-entity mindar-image-target="targetIndex: 1" id="target1">
-      <a-plane id="card10" position="0 0.9 0" width="1.5" height="0.6" color="#1E90FF" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 10" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
+      <a-plane id="card10" position="0 0.9 0" width="1.5" height="0.6" color="#1E90FF" visible="false">
+        <a-text value="Card 10" align="center" position="0 0 0.02" color="white"></a-text>
       </a-plane>
-      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#32CD32" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 11" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
-      </a-plane>
-      <a-plane id="card12" position="0 0.9 0" width="1.5" height="0.6" color="#FFD700" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 12" align="center" position="0 0 0.02" color="black" shader="msdf"></a-text>
-      </a-plane>
-      <a-plane id="card13" position="0 0.9 0" width="1.5" height="0.6" color="#FF4500" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 13" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
-      </a-plane>
-      <a-plane id="card14" position="0 0.9 0" width="1.5" height="0.6" color="#9400D3" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 14" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
-      </a-plane>
-      <a-plane id="card15" position="0 0.9 0" width="1.5" height="0.6" color="#20B2AA" opacity="0.6" visible="false" material="transparent:true; shader:standard; roughness:0.1; metalness:1">
-        <a-text value="Card 15" align="center" position="0 0 0.02" color="white" shader="msdf"></a-text>
+      <a-plane id="card11" position="0 0.9 0" width="1.5" height="0.6" color="#32CD32" visible="false">
+        <a-text value="Card 11" align="center" position="0 0 0.02" color="white"></a-text>
       </a-plane>
     </a-entity>
 
@@ -104,17 +115,11 @@ button.active {
     const cardsTarget0 = [
       document.querySelector("#card1"),
       document.querySelector("#card2"),
-      document.querySelector("#card3"),
-      document.querySelector("#card4"),
-      document.querySelector("#card5")
+      document.querySelector("#card3")
     ];
     const cardsTarget1 = [
       document.querySelector("#card10"),
-      document.querySelector("#card11"),
-      document.querySelector("#card12"),
-      document.querySelector("#card13"),
-      document.querySelector("#card14"),
-      document.querySelector("#card15")
+      document.querySelector("#card11")
     ];
 
     let currentCards = cardsTarget0;
@@ -128,7 +133,6 @@ button.active {
       currentIndex = (currentIndex + 1) % currentCards.length;
       showCard(currentIndex);
     });
-
     document.querySelector("#prev").addEventListener("click", ()=>{
       currentIndex = (currentIndex - 1 + currentCards.length) % currentCards.length;
       showCard(currentIndex);
@@ -137,30 +141,35 @@ button.active {
     // Inicial
     showCard(currentIndex);
 
-    // Manejo de targets
+    // Manejo de targets + quitar portada
+    const intro = document.querySelector("#intro");
     const target0 = document.querySelector("#target0");
     const target1 = document.querySelector("#target1");
 
+    function hideIntro() {
+      if (!intro.classList.contains("hidden")) {
+        intro.classList.add("hidden");
+        setTimeout(()=> intro.style.display="none", 1000);
+      }
+    }
+
     target0.addEventListener("targetFound", ()=>{
+      hideIntro();
       currentCards = cardsTarget0;
       currentIndex = 0;
       showCard(currentIndex);
       cardsTarget1.forEach(c=>c.setAttribute("visible", false));
     });
-    target0.addEventListener("targetLost", ()=>{
-      cardsTarget0.forEach(c=>c.setAttribute("visible", false));
-    });
-
     target1.addEventListener("targetFound", ()=>{
+      hideIntro();
       currentCards = cardsTarget1;
       currentIndex = 0;
       showCard(currentIndex);
       cardsTarget0.forEach(c=>c.setAttribute("visible", false));
     });
-    target1.addEventListener("targetLost", ()=>{
-      cardsTarget1.forEach(c=>c.setAttribute("visible", false));
-    });
+
+    target0.addEventListener("targetLost", ()=>cardsTarget0.forEach(c=>c.setAttribute("visible", false)));
+    target1.addEventListener("targetLost", ()=>cardsTarget1.forEach(c=>c.setAttribute("visible", false)));
   </script>
 </body>
 </html>
-
