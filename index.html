@@ -38,12 +38,6 @@
     width: 100%;
     height: 100%;
     
-    background-image: url("portada1.png"); /* Tu imagen */
-    background-position: center;           /* Centra la imagen */
-    background-repeat: no-repeat;          /* No se repite */
-    background-attachment: fixed;          /* Fondo estático */
-    background-size: cover;                /* Ocupa toda la pantalla */
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -52,16 +46,31 @@
     font-family: 'Arial Black', sans-serif;
     text-align: center;
     z-index: 2000;
-    opacity: 0.5;     /* 50% de opacidad */
+
+    /* Para transición de desvanecimiento */
     transition: opacity 0.8s ease;
+    opacity: 1; /* Inicial visible */
 }
 
+/* Fondo con opacidad sin afectar contenido */
+#intro::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: url("portada1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;         /* 50% de opacidad */
+    z-index: -1;           /* Detrás del contenido */
+    transition: opacity 0.8s ease; /* Para desvanecimiento */
+}
 
-
-    #intro.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
+#intro.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
 
     /* Logo animado */
     #intro img {
@@ -197,17 +206,16 @@
 
     let returnTimer = null;
 
-    function hideIntro() {
-      if (!intro.classList.contains("hidden")) {
-        intro.classList.add("hidden");
-        setTimeout(()=> intro.style.display="none", 1000);
-      }
-    }
+   function hideIntro() {
+  if (!intro.classList.contains("hidden")) {
+    intro.classList.add("hidden"); // Se desvanece
+    // No es necesario cambiar display, la transición maneja el fade
+  }
+}
 
-    function showIntro() {
-      intro.style.display = "flex";
-      setTimeout(()=> intro.classList.remove("hidden"), 50);
-    }
+function showIntro() {
+  intro.classList.remove("hidden"); // Aparece con fade
+}
 
     function resetReturnTimer() {
       if (returnTimer) clearTimeout(returnTimer);
@@ -245,6 +253,7 @@
   </script>
 </body>
 </html>
+
 
 
 
