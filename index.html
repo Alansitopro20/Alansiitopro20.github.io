@@ -31,16 +31,18 @@
     }
     button:hover { background: rgba(0, 123, 255, 1); }
 
-    #intro {
+   #intro {
     position: absolute;
-    top: 0; 
+    top: 0;
     left: 0;
-    width: 100%; 
+    width: 100%;
     height: 100%;
-    background-image: url("portada1.png");
-    background-size: contain;     /* La imagen se ajusta para verse completa */
-    background-position: center;  /* Centra la imagen */
-    background-repeat: no-repeat; /* No se repite */
+    
+    background-image: url("portada1.png"); /* Tu imagen */
+    background-position: center;           /* Centra la imagen */
+    background-repeat: no-repeat;          /* No se repite */
+    background-attachment: fixed;          /* Fondo estático */
+    background-size: cover;                /* Ocupa toda la pantalla */
     
     display: flex;
     justify-content: center;
@@ -50,11 +52,8 @@
     font-family: 'Arial Black', sans-serif;
     text-align: center;
     z-index: 2000;
-    transition: opacity 0.8s ease;
-
-    animation: none;  /* Fondo estático */
-    opacity: 0.5;     /* 50% de opacidad */
 }
+
 
 
     #intro.hidden {
@@ -244,5 +243,6 @@
   </script>
 </body>
 </html>
+
 
 
