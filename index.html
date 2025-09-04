@@ -39,20 +39,17 @@
     height: 100%;
     
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
     
-    font-family: 'Arial Black', sans-serif;
     text-align: center;
     z-index: 2000;
-
-    /* Para transición de desvanecimiento */
     transition: opacity 0.8s ease;
-    opacity: 1; /* Inicial visible */
+    opacity: 1;
 }
 
-/* Fondo con opacidad sin afectar contenido */
+/* Fondo con opacidad */
 #intro::before {
     content: "";
     position: absolute;
@@ -62,9 +59,9 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.5;         /* 50% de opacidad */
-    z-index: -1;           /* Detrás del contenido */
-    transition: opacity 0.8s ease; /* Para desvanecimiento */
+    opacity: 0.5;
+    z-index: -1;
+    transition: opacity 0.8s ease;
 }
 
 #intro.hidden {
@@ -72,64 +69,59 @@
     pointer-events: none;
 }
 
-    /* Logo animado */
-    #intro img {
-      width: 220px;
-      margin-bottom: 25px;
-      animation: bounceIn 2s ease;
-    }
+/* Título principal estilo tipo imagen */
+#titulo {
+    font-family: 'Arial Black', sans-serif; /* Cambiar si quieres la fuente exacta de la imagen */
+    font-size: 4em;
+    color: white;
+    margin-top: 40px; /* separa del borde superior */
+    text-shadow: 
+        2px 2px 5px #000, 
+        -2px -2px 5px #000,
+        0 0 20px #fff, /* destello blanco detrás */
+        0 0 30px #3CAC3B,
+        0 0 40px #E61D25;
+    animation: tituloGlow 2s infinite alternate;
+}
 
-    /* Texto "Bienvenido" con efecto 3D */
-    #intro h1 {
-      font-size: 3em;
-      margin: 0.3em 0;
-      color: #fff;
-      text-shadow: 
-        2px 2px 0px #000, 
-        -2px -2px 0px #000, 
-        2px -2px 0px #000, 
-        -2px 2px 0px #000;
-      animation: glow 2.5s infinite alternate;
-      letter-spacing: 2px;
+/* Animación de destello */
+@keyframes tituloGlow {
+    0% {
+        text-shadow: 2px 2px 5px #000, 0 0 20px #fff, 0 0 30px #3CAC3B, 0 0 40px #E61D25;
     }
+    50% {
+        text-shadow: 2px 2px 10px #000, 0 0 30px #fff, 0 0 40px #3CAC3B, 0 0 50px #E61D25;
+    }
+    100% {
+        text-shadow: 2px 2px 5px #000, 0 0 20px #fff, 0 0 30px #3CAC3B, 0 0 40px #E61D25;
+    }
+}
 
-    /* Subtexto */
-    #intro p {
-      font-size: 1.2em;
-      color: #D1D4D1;
-      margin-top: 10px;
-      text-shadow: 1px 1px 3px #000;
-      animation: blink 2s infinite;
-    }
+/* Subtexto centrado */
+#subtexto {
+    font-size: 1.5em;
+    color: #FFF;
+    margin-top: 20px;
+    text-shadow: 1px 1px 3px #000;
+    animation: blink 2s infinite;
+}
 
-    /* Animaciones */
-    @keyframes bounceIn {
-      0% { transform: scale(0.3); opacity: 0; }
-      50% { transform: scale(1.2); opacity: 1; }
-      70% { transform: scale(0.9); }
-      100% { transform: scale(1); }
-    }
-    @keyframes glow {
-      from { text-shadow: 2px 2px 5px #000, 0 0 10px #3CAC3B, 0 0 20px #2A398D; }
-      to { text-shadow: 2px 2px 5px #000, 0 0 15px #E61D25, 0 0 25px #474A4A; }
-    }
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
+/* Animación de parpadeo */
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+    
+
+    
   </style>
 </head>
 <body>
   <!-- Pantalla de bienvenida -->
   <div id="intro">
-    <img src="portada.jpg" alt="Logo Mundial 2026">
-    <h1>¡Bienvenido!</h1>
-    <p>Escanea una imagen para comenzar</p>
+     <h1 id="titulo">MUNDIAL 2026</h1>
+  <p id="subtexto">Escanea aquí la bandera</p>
   </div>
 
   <!-- Controles de navegación -->
@@ -253,6 +245,7 @@ function showIntro() {
   </script>
 </body>
 </html>
+
 
 
 
