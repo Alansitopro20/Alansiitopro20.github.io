@@ -1,126 +1,24 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>RA Mundial 2026</title>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.0/build/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-three.prod.js"></script>
-  <style>
-    body { margin: 0; overflow: hidden; font-family: Arial, sans-serif; }
-    .card {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 220px;
-      background: rgba(255,255,255,0.95);
-      padding: 12px;
-      border-radius: 10px;
-      text-align: center;
-      display: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-    .card img { width: 100%; border-radius: 6px; }
-    .buttons { margin-top: 10px; display: flex; justify-content: space-between; }
-    button { padding: 6px 12px; cursor: pointer; border: none; background-color: #0077ff; color: white; border-radius: 4px; }
-    button:hover { background-color: #005fcc; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Procesamineto Imagenes</title>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
 </head>
 <body>
-  <div class="card" id="playerCard">
-    <img id="playerImage" src="" alt="Jugador">
-    <h3 id="playerName"></h3>
-    <p id="playerDesc"></p>
-    <div class="buttons">
-      <button id="prevBtn">Atrás</button>
-      <button id="nextBtn">Siguiente</button>
-    </div>
-  </div>
-
-  <script >
-    import * as THREE from 'three';
-import { MindARThree } from 'mindar-image-three';
-
-// Datos de jugadores por bandera (índice del target)
-const playersByCountry = {
-  0: [ // México
-    { name: "Hugo Sánchez", desc: "Delantero legendario", img: "mex1.jpg" },
-    { name: "Rafa Márquez", desc: "Defensa sólido", img: "mex2.jpg" }
-  ],
-  1: [ // Brasil
-    { name: "Pelé", desc: "Delantero estrella", img: "bra1.jpeg" },
-    { name: "Cafu", desc: "Lateral derecho confiable", img: "bra2.jpg" }
-  ],
-  2: [ // Argentina
-    { name: "Lionel Messi", desc: "Mediocampista/Delantero", img: "arg1.jpg" },
-    { name: "Dibu Martínez", desc: "Portero", img: "arg2.jpg" }
-  ],
-  3: [ // Francia
-    { name: "Kylian Mbappé", desc: "Delantero veloz", img: "fra1.jpg" },
-    { name: "Hugo Lloris", desc: "Portero experimentado", img: "fra2.jpg" }
-  ],
-  4: [ // Alemania
-    { name: "Manuel Neuer", desc: "Portero confiable", img: "ger1.jpg" },
-    { name: "Thomas Müller", desc: "Delantero versátil", img: "ger2.jpg" }
-  ]
-};
-
-let currentPlayers = [];
-let currentIndex = 0;
-
-// Inicializar MindAR
-const mindARThree = new MindARThree({
-  container: document.body,
-  imageTargetSrc: "flags.mind" // Archivo con las 5 banderas
-});
-
-const { renderer, scene, camera } = mindARThree;
-
-// Luz
-const light = new THREE.HemisphereLight(0xffffff, 0xbbbbff, 1);
-scene.add(light);
-
-// Crear anchors por cada bandera
-const totalTargets = Object.keys(playersByCountry).length;
-for (let i = 0; i < totalTargets; i++) {
-  const anchor = mindARThree.addAnchor(i);
-
-  anchor.onTargetFound = () => {
-    currentPlayers = playersByCountry[i];
-    currentIndex = 0;
-    document.getElementById('playerCard').style.display = 'block';
-    showPlayer(currentIndex);
-  };
-
-  anchor.onTargetLost = () => {
-    document.getElementById('playerCard').style.display = 'none';
-  };
-}
-
-// Función para mostrar jugador
-function showPlayer(index) {
-  const player = currentPlayers[index];
-  document.getElementById('playerImage').src = player.img;
-  document.getElementById('playerName').textContent = player.name;
-  document.getElementById('playerDesc').textContent = player.desc;
-}
-
-// Botones
-document.getElementById('nextBtn').addEventListener('click', () => {
-  currentIndex = (currentIndex + 1) % currentPlayers.length;
-  showPlayer(currentIndex);
-});
-document.getElementById('prevBtn').addEventListener('click', () => {
-  currentIndex = (currentIndex - 1 + currentPlayers.length) % currentPlayers.length;
-  showPlayer(currentIndex);
-});
-
-// Iniciar RA
-mindARThree.start();
-renderer.setAnimationLoop(() => {
-  renderer.render(scene, camera);
-});
-
-  </script>
+    <a-scene
+    mindar-image="imageTargetSrc:flags.ming" 
+    vr-mode-ui="enabled:false"
+    device-orientation-permission-ui="enabled:false">
+        <a-camera position="0 0 0" look-controls="enabled:false">
+            <a-entity mindar-image-target="targetIndex: 0" >
+                <a-sphere position="0 0 0 " radius="0.25" color="#EF2D5E" >
+                </a-sphere>
+            </a-entity>
+        </a-camera>
+    </a-scene>
 </body>
 </html>
