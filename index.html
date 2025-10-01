@@ -2,10 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>MindAR Cards Example</title>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+    <title>Test MindAR</title>
+    <script src="https://cdn.jsdelivr.net/npm/aframe@1.2.0/dist/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+    <style>
+      body { margin: 0; overflow: hidden; }
+      a-scene { width: 100vw; height: 100vh; }
+    </style>
   </head>
   <body>
     <a-scene
@@ -17,90 +20,8 @@
 
       <!-- Target 0 -->
       <a-entity mindar-image-target="targetIndex: 0">
-        <a-entity id="card0" visible="true">
-          <a-plane width="1.5" height="2" color="#FFF" shadow>
-            <!-- Imagen -->
-            <a-image src="https://placekitten.com/300/200" position="0 0.5 0.01" width="1.3" height="0.8"></a-image>
-            <!-- Título -->
-            <a-text value="Gatito" width="1.4" position="-0.7 1.2 0.01" color="black"></a-text>
-            <!-- Descripción -->
-            <a-text value="Un lindo gatito que le gusta dormir." width="1.4" position="-0.7 0.1 0.01" color="black" wrap-count="30"></a-text>
-            <!-- Botones -->
-            <a-plane id="prev0" color="#EF5350" width="0.6" height="0.3" position="-0.5 -0.7 0.01" class="clickable">
-              <a-text value="Anterior" align="center" color="#FFF" position="0 0 0.01"></a-text>
-            </a-plane>
-            <a-plane id="next0" color="#42A5F5" width="0.6" height="0.3" position="0.5 -0.7 0.01" class="clickable">
-              <a-text value="Siguiente" align="center" color="#FFF" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-plane>
-        </a-entity>
-      </a-entity>
-
-      <!-- Otro target (ejemplo bandera 2) -->
-      <a-entity mindar-image-target="targetIndex: 1">
-        <a-entity id="card1" visible="true">
-          <a-plane width="1.5" height="2" color="#FFF">
-            <a-image src="https://placebear.com/300/200" position="0 0.5 0.01" width="1.3" height="0.8"></a-image>
-            <a-text value="Osito" width="1.4" position="-0.7 1.2 0.01" color="black"></a-text>
-            <a-text value="Un oso curioso." width="1.4" position="-0.7 0.1 0.01" color="black" wrap-count="30"></a-text>
-            <a-plane id="prev1" color="#EF5350" width="0.6" height="0.3" position="-0.5 -0.7 0.01" class="clickable">
-              <a-text value="Anterior" align="center" color="#FFF" position="0 0 0.01"></a-text>
-            </a-plane>
-            <a-plane id="next1" color="#42A5F5" width="0.6" height="0.3" position="0.5 -0.7 0.01" class="clickable">
-              <a-text value="Siguiente" align="center" color="#FFF" position="0 0 0.01"></a-text>
-            </a-plane>
-          </a-plane>
-        </a-entity>
+        <a-box position="0 0 0" color="red"></a-box>
       </a-entity>
     </a-scene>
-
-    <script>
-      // Ejemplo de sets de cards
-      const cardsData = {
-        0: [
-          { title: "Gatito", img: "https://placekitten.com/300/200", desc: "Un lindo gatito que le gusta dormir." },
-          { title: "Perrito", img: "https://placedog.net/300/200", desc: "Un cachorro muy juguetón." }
-        ],
-        1: [
-          { title: "Oso", img: "https://placebear.com/300/200", desc: "Un oso curioso." },
-          { title: "Tigre", img: "https://loremflickr.com/320/240/tiger", desc: "Un tigre salvaje." }
-        ]
-      };
-
-      function updateCard(targetIndex, cardIndex) {
-        const cardEntity = document.querySelector("#card" + targetIndex);
-        const data = cardsData[targetIndex][cardIndex];
-
-        const img = cardEntity.querySelector("a-image");
-        const title = cardEntity.querySelectorAll("a-text")[0];
-        const desc = cardEntity.querySelectorAll("a-text")[1];
-
-        img.setAttribute("src", data.img);
-        title.setAttribute("value", data.title);
-        desc.setAttribute("value", data.desc);
-      }
-
-      let currentIndex = { 0: 0, 1: 0 };
-
-      document.querySelector("#next0").addEventListener("click", () => {
-        currentIndex[0] = (currentIndex[0] + 1) % cardsData[0].length;
-        updateCard(0, currentIndex[0]);
-      });
-
-      document.querySelector("#prev0").addEventListener("click", () => {
-        currentIndex[0] = (currentIndex[0] - 1 + cardsData[0].length) % cardsData[0].length;
-        updateCard(0, currentIndex[0]);
-      });
-
-      document.querySelector("#next1").addEventListener("click", () => {
-        currentIndex[1] = (currentIndex[1] + 1) % cardsData[1].length;
-        updateCard(1, currentIndex[1]);
-      });
-
-      document.querySelector("#prev1").addEventListener("click", () => {
-        currentIndex[1] = (currentIndex[1] - 1 + cardsData[1].length) % cardsData[1].length;
-        updateCard(1, currentIndex[1]);
-      });
-    </script>
   </body>
 </html>
