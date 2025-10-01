@@ -1,32 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PIA-PI</title>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PIA-PI</title>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image.prod.js"></script>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.1.4/dist/mindar-image-aframe.prod.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; overflow: hidden; }
+    a-scene { width: 100vw; height: 100vh; }
+    .clickable { cursor: pointer; }
+  </style>
 </head>
 <body>
-    <a-scene
+  <a-scene
     mindar-image="imageTargetSrc: targets.mind;" 
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false"
     id="scene">
+    
     <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
     <!-- Target 0 -->
     <a-entity mindar-image-target="targetIndex: 0">
-        <a-sphere position="0 0 0" radius="0.25" color="#EF2D5W" >
-
-        </a-sphere>
-      
-        
-
+      <!-- Card container -->
+      <a-entity id="card0">
+        <a-plane id="card-bg" width="1.6" height="2" color="#ffffff" material="shader: flat" radius="0.1">
+          <!-- Imagen -->
+          <a-image id="card-img" src="" position="0 0.6 0.01" width="1.4" height="0.8"></a-image>
+          <!-- Título -->
+          <a-text id="card-title" value="" font="https://cdn.aframe.io/fonts/mozillavr.fnt" 
+                  position="-0.75 1.3 0.01" color="black" width="2"></a-text>
+          <!-- Descripción -->
+          <a-text id="card-desc" value="" position="-0.75 -0.1 0.01" color="black" width="1.5" wrap-count="30"></a-text>
+          <!-- Botón Anterior -->
+          <a-plane id="prev-btn" color="#EF5350" width="0.6" height="0.3" position="-0.5 -0.7 0.01" class="clickable">
+            <a-text value="Anterior" align="center" color="white" position="0 0 0.01"></a-text>
+          </a-plane>
+          <!-- Botón Siguiente -->
+          <a-plane id="next-btn" color="#42A5F5" width="0.6" height="0.3" position="0.5 -0.7 0.01" class="clickable">
+            <a-text value="Siguiente" align="center" color="white" position="0 0 0.01"></a-text>
+          </a-plane>
+        </a-plane>
+      </a-entity>
     </a-entity>
+  </a-scene>
 
+  <script>
+    // Cards para el target 0
+    const cardsData = [
+      { title: "Card 1", img: "https://placekitten.com/300/200", desc: "Descripción del primer card." },
+      { title: "Card 2", img: "https://placedog.net/300/200", desc: "Descripción del segundo card." },
+      { title: "Card 3", img: "https://placebear.com/300/200", desc: "Descripción del tercer card." }
+    ];
 
+    let currentIndex = 0;
+
+    function updateCard() {
+      const data = cardsData[currentIndex];
+      document.querySelector("#card-title").setAttribute("value", data.title);
+      document.querySelector("#card-img").setAttribute("src", data.img);
+      document.querySelector("#card-desc").setAttribute("value", data.desc);
+    }
+
+    // Botones
+    document.querySelector("#next-btn").addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % cardsData.length;
+      updateCard();
+    });
+
+    document.querySelector("#prev-btn").addEventListener("click", () => {
+      currentIndex = (currentIndex - 1 + cardsData.length) % cardsData.length;
+      updateCard();
+    });
+
+    // Inicializar primer card
+    updateCard();
+  </script>
 </body>
 </html>
